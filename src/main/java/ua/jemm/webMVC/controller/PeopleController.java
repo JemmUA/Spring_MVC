@@ -30,6 +30,7 @@ public class PeopleController {
     }
 
     @GetMapping("/new")
+//    public String newPerson(@ModelAttribute Person person) {
     public String newPerson(Model model) {
         model.addAttribute("people", new Person());
         return "/people/new";
@@ -40,4 +41,24 @@ public class PeopleController {
         personDAO.save(person);
         return "redirect:/people";
     }
+
+    @GetMapping("/{id}/edit")
+    public String edit(Model model, @PathVariable("id") int id) {
+        model.addAttribute("person", personDAO.getBiId(id));
+        return "/people/edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String patch(@ModelAttribute("person") Person person, @PathVariable("id") int id) {
+        System.out.println("patch");
+        personDAO.update(id, person);
+        return "redirect:/people";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id) {
+        personDAO.delete(id);
+        return "redirect:/people";
+    }
+
 }

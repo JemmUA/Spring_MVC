@@ -5,6 +5,7 @@ import ua.jemm.webMVC.model.Person;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Component
 public class PersonDAO {
     private int personId;
@@ -30,6 +31,14 @@ public class PersonDAO {
     public void save(Person person) {
         person.setId(++personId);
         people.add(person);
+    }
 
+    public void update(int id, Person updatePerson) {
+        Person personUpdating = getBiId(id);
+        personUpdating.setName(updatePerson.getName());
+    }
+
+    public void delete(int id) {
+        people.removeIf(person -> person.getId() == id);
     }
 }
